@@ -1,0 +1,64 @@
+<!-- <section class="card bg-base-100 shadow-xl max-w-md mx-auto">
+  <figure class="px-10 pt-10">
+    <img src="{{ country().flagSvg }}" alt="Bandera de {{ country().name }}" class="rounded-xl w-32 h-20 object-cover" />
+  </figure>
+  <div class="card-body items-center text-center">
+    <h2 class="card-title text-2xl font-bold">{{ country().name }}</h2>
+    <div class="divider"></div>
+    <div class="grid grid-cols-1 gap-4 w-full">
+      <div class="stat">
+        <div class="stat-title">Capital</div>
+        <div class="stat-value text-lg">{{ country().capital }}</div>
+      </div>
+      <div class="stat">
+        <div class="stat-title">Población</div>
+        <div class="stat-value text-lg">{{ country().population | number }}</div>
+      </div>
+      <div class="stat">
+        <div class="stat-title">Código</div>
+        <div class="stat-value text-lg">{{ country().cca2 }}</div>
+      </div>
+    </div>
+  </div>
+</section> -->
+
+<section class="stats shadow flex justify-center mt-10">
+  <div class="stat place-items-center">
+    <div class="stat-title">Nombre</div>
+    <div class="stat-value">{{ country().name }}</div>
+  </div>
+
+  <div class="stat place-items-center">
+    <div class="stat-title">Población</div>
+    <div class="stat-value text-secondary">{{ country().population | number }}</div>
+    <div class="stat-desc text-secondary">Desde {{ currentYear() }}</div>
+  </div>
+  <div class="stat place-items-center">
+    <div class="stat-title">Capital</div>
+    <div class="stat-value text-secondary">{{ country().capital }}</div>
+    <div class="stat-desc text-secondary">{{ country().region }}</div>
+  </div>
+
+  <div class="stat place-items-center">
+    <div class="stat-title">Bandera</div>
+    <div class="stat-value text-secondary">
+      <figure class="px-10 pt-10">
+        <img
+          src="{{ country().flagSvg }}"
+          alt="Bandera de {{ country().name }}"
+          class="rounded-xl w-32 h-20 object-cover"
+        />
+      </figure>
+    </div>
+    <div class="stat-desc text-secondary">{{ country().subRegion }}</div>
+  </div>
+</section>
+
+<section class="flex justify-center mt-10 px-5">
+  <div class="card bg-base-100 shadow-xl w-full max-w-4xl">
+    <div class="card-body">
+      <h2 class="card-title">Ubicación: {{ country().name }}</h2>
+      <div #mapContainer class="w-full h-96 rounded-lg border border-base-300"></div>
+    </div>
+  </div>
+</section>

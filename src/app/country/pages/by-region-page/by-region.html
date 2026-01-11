@@ -1,0 +1,28 @@
+<h1 class="text-2xl">Por Region</h1>
+<h3 class="text-lg">Seleccione una region</h3>
+
+<section class="row mt-2">
+  <div class="flex-col">
+    <ul class="menu bg-base-200 sm:menu-horizontal rounded-box">
+      @for (region of regions; track region.name) {
+      <li>
+        <button
+          class="btn btn-outline mr-2 w-25 flex items-center gap-2"
+          (click)="selectedRegion.set(region)"
+          [class.btn-primary]="region === selectedRegion()"
+        >
+          <span [innerHTML]="region.svg" class="w-5 h-5"></span>
+          {{ region.name }}
+        </button>
+      </li>
+      }
+    </ul>
+  </div>
+</section>
+
+<country-list
+  [countries]="countryResource.value() ?? []"
+  [errorMessage]="countryResource.error()"
+  [isEmpty]="countryResource.value()?.length === 0"
+  [isLoading]="countryResource.isLoading()"
+/>

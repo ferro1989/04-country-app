@@ -1,0 +1,16 @@
+<!--  -->
+@if (countryResource.error()) {
+<app-not-found />
+}
+<!--  -->
+@if (countryResource.isLoading()) {
+<div class="flex justify-center items-center mt-10 gap-5">
+  <span class="skeleton skeleton-text text-2xl">Cargando datos</span>
+  <span class="loading loading-bars loading-lg text-primary text-2xl"></span>
+</div>
+
+}
+<!--  -->
+@if (countryResource.hasValue()) {
+<country-information-page [country]="countryResource.value()![0]" />
+}
