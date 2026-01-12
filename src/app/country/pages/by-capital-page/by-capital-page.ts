@@ -6,7 +6,6 @@ import { firstValueFrom, of, tap, catchError, throwError } from 'rxjs';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router } from '@angular/router';
 
-
 @Component({
   selector: 'by-capital-page',
   imports: [SearchInput, CountryList],
@@ -20,18 +19,17 @@ export class ByCapitalPage {
   router = inject(Router);
   queryParam = inject(ActivatedRoute).snapshot.queryParamMap.get('query') ?? '';
 
-
-  query = linkedSignal(()=> this.queryParam);
+  query = linkedSignal(() => this.queryParam);
 
   //Usando Observables de RxJs
   countryResource = rxResource({
-    params: ()=>({ query: this.query() }),
-    stream: ({params})=>{
-      if(!params.query) return of([])
+    params: () => ({ query: this.query() }),
+    stream: ({ params }) => {
+      if (!params.query) return of([]);
 
       this.isLoading.set(true);
       this.router.navigate(['country/by-capital'], {
-        queryParams: { query: params.query }
+        queryParams: { query: params.query },
       });
 
       return this.countryService.searchByCapital(params.query).pipe(
@@ -41,19 +39,17 @@ export class ByCapitalPage {
           return throwError(() => error);
         })
       );
-    }
-  })
+    },
+  });
 
   // Computed signals para manejar el estado de manera segura
   countries = computed(() => {
-    return this.countryResource.error() ? [] : (this.countryResource.value() ?? []);
+    return this.countryResource.error() ? [] : this.countryResource.value() ?? [];
   });
 
   errorMessage = computed(() => {
     const error = this.countryResource.error();
-    if (!error) return null;
-    // El error real está en error.cause
-    return (error as any).cause?.message || error.message || 'Error desconocido';
+    if (error) return (error as any).cause?.message || error.message || 'Error desconocido';
   });
 
   isEmpty = computed(() => {
