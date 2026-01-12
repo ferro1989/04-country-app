@@ -2,7 +2,6 @@ import { Component, input, output, signal } from '@angular/core';
 import { Country } from '../../interfaces/country.inteface';
 import { DecimalPipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
-import { single } from 'rxjs';
 
 @Component({
   selector: 'country-list',
