@@ -1,4 +1,4 @@
-import { Component, input, signal } from '@angular/core';
+import { Component, input, output, signal } from '@angular/core';
 import { Country } from '../../interfaces/country.inteface';
 import { DecimalPipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
@@ -17,4 +17,12 @@ export class CountryList {
   isLoading = input<boolean>(false);
   isEmpty = input<boolean>(false);
 
+  // Nuevo input para el tipo de búsqueda
+  searchType = input<string>(''); // valor por defecto
+
+  closeErrorEvent = output<void>();
+
+  closeError() {
+    this.closeErrorEvent.emit();
+  }
 }

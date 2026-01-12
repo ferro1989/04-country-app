@@ -27,34 +27,47 @@
           </span>
         </td>
         <td>
-          <a [routerLink]="['/country/by', country.cca2]" class="link-primary cursor-pointer"
-            >Mas informacion</a
-          >
+          <a [routerLink]="['/country/by', country.cca2]" class="link-primary cursor-pointer">Mas informacion</a>
         </td>
       </tr>
       }
       <!--  -->
       @if (errorMessage()) {
-      <tr>
+      <dialog class="modal modal-open">
+        <div class="modal-box">
+          <h3 class="font-bold text-lg flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="text-error">
+              <g fill="none">
+                <path d="M20 10c0 6.5-8 12-8 12s-8-5.5-8-12a8 8 0 1 1 16 0" />
+                <path stroke="currentColor" stroke-linecap="square" stroke-width="2"
+                  d="M20 10c0 6.5-8 12-8 12s-8-5.5-8-12a8 8 0 1 1 16 0ZM9.879 8.379L12 10.5m0 0l2.121 2.121m-2.12-2.12l2.12-2.122m-2.12 2.121l-2.122 2.121" />
+              </g>
+            </svg>
+            Error
+          </h3>
+          <p class="py-4">
+            No se pudo obtener {{searchType()}} con el nombre:
+            <span class="text-error underline decoration-2 font-semibold">{{ errorMessage() }}</span>
+          </p>
+          <div class="modal-action">
+            <button class="btn btn-error" (click)="closeError()">Cerrar</button>
+          </div>
+        </div>
+      </dialog>
+      <!-- <tr>
         <td colspan="7">
-          <div
-            role="alert"
-            class="alert alert-error mx-auto flex items-center gap-3 w-auto justify-center"
-          >
+          <div role="alert" class="alert alert-error mx-auto flex items-center gap-3 w-auto justify-center">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-              <path
-                fill="currentColor"
-                d="M15.762 17.177a8.47 8.47 0 0 1-4.934 1.817a6.5 6.5 0 0 0-8.772-7.519a8.5 8.5 0 1 1 15.12 4.287l5.345 5.345l-1.415 1.414z"
-              />
-              <path
-                fill="currentColor"
-                d="m8.743 14.672l-1.415-1.415L4.5 16.086l-2.828-2.829l-1.415 1.415L3.086 17.5L.257 20.328l1.415 1.415L4.5 18.914l2.828 2.829l1.415-1.415L5.914 17.5z"
-              />
+              <g fill="none">
+                <path d="M20 10c0 6.5-8 12-8 12s-8-5.5-8-12a8 8 0 1 1 16 0" />
+                <path stroke="currentColor" stroke-linecap="square" stroke-width="2"
+                  d="M20 10c0 6.5-8 12-8 12s-8-5.5-8-12a8 8 0 1 1 16 0ZM9.879 8.379L12 10.5m0 0l2.121 2.121m-2.12-2.12l2.12-2.122m-2.12 2.121l-2.122 2.121" />
+              </g>
             </svg>
             <span class="font-bold">{{ errorMessage() }}</span>
           </div>
         </td>
-      </tr>
+      </tr> -->
       }
       <!--  -->
       @else if (isEmpty() && !isLoading() ) {

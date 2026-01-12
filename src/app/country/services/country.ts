@@ -31,7 +31,7 @@ export class CountryService {
       tap((countries) => this.queryCacheCapital.set(query, countries)), //almacenar el resultado en la caché
       delay(1000), // un delay para simular tiempo de respuesta
       catchError((error) => {
-        return throwError(() => new Error(`No se pudo obtener pais con la capital ${query}`));
+        return throwError(() => new Error(`${query}`));
       })
     );
   }
@@ -50,7 +50,7 @@ export class CountryService {
       tap((countries) => this.queryCacheCountry.set(query, countries)), //almacenar el resultado en la caché
       delay(1000),
       catchError((error) => {
-        return throwError(() => new Error(`No se pudo obtener pais con ese nombre ${query}`));
+        return throwError(() => new Error(`${query}`));
       })
     );
   }

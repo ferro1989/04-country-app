@@ -48,10 +48,18 @@ export class ByCountryPage {
     return this.countryResource.error() ? [] : this.countryResource.value() ?? [];
   });
 
-  errorMessage = computed(() => {
+ errorFromResource = computed(() => {
     const error = this.countryResource.error();
     if (error) return (error as any).cause?.message || error.message || 'Error desconocido';
   });
+
+  errorMessage = linkedSignal(() => this.errorFromResource());
+
+  // Método para limpiar el error
+  clearError() {
+    this.errorMessage.set(null);
+  }
+
 
   isEmpty = computed(() => {
     return !this.countryResource.error() && this.countries().length === 0;
