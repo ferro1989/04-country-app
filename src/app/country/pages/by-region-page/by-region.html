@@ -7,7 +7,7 @@
       @for (region of regions; track region.name) {
       <li>
         <button
-          class="btn btn-outline mr-2 w-25 flex items-center gap-2"
+          class="btn btn-outline mr-2 w-auto flex items-center gap-2"
           (click)="selectedRegion.set(region)"
           [class.btn-primary]="region === selectedRegion()"
         >

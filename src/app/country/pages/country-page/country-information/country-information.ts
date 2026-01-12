@@ -1,20 +1,18 @@
-import { Component, computed, input, ViewChild, ElementRef, AfterViewInit, inject } from '@angular/core';
+import { Component, computed, input, ViewChild, ElementRef, AfterViewInit, inject, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Country } from '../../../interfaces/country.inteface';
-import { DecimalPipe } from '@angular/common';
+import { DatePipe, DecimalPipe } from '@angular/common';
 import * as L from 'leaflet';
 
 @Component({
   selector: 'country-information-page',
-  imports: [DecimalPipe],
+  imports: [DecimalPipe,DatePipe],
   templateUrl: './country-information.html',
 })
 export class CountryInformation implements AfterViewInit {
 
   country = input.required<Country>();
-  currentYear = computed(()=>{
-    return new Date().getFullYear();
-  });
+  customDate = signal(new Date());
 
   @ViewChild('mapContainer') mapContainer?: ElementRef<HTMLDivElement>;
   private map!: L.Map;

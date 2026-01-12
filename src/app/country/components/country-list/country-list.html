@@ -39,7 +39,7 @@
         <td colspan="7">
           <div
             role="alert"
-            class="alert alert-error w-96 mx-auto"
+            class="alert alert-error mx-auto flex items-center gap-3 w-auto justify-center"
           >
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
               <path
@@ -51,7 +51,7 @@
                 d="m8.743 14.672l-1.415-1.415L4.5 16.086l-2.828-2.829l-1.415 1.415L3.086 17.5L.257 20.328l1.415 1.415L4.5 18.914l2.828 2.829l1.415-1.415L5.914 17.5z"
               />
             </svg>
-            <span>{{ errorMessage() }}</span>
+            <span class="font-bold">{{ errorMessage() }}</span>
           </div>
         </td>
       </tr>

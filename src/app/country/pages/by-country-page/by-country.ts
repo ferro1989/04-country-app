@@ -1,4 +1,4 @@
-import { Component, inject, linkedSignal, resource, signal } from '@angular/core';
+import { Component, computed, inject, linkedSignal, resource, signal } from '@angular/core';
 import { SearchInput } from '../../components/search-input/search-input';
 import { CountryList } from '../../components/country-list/country-list';
 import { catchError, firstValueFrom, of, tap, throwError } from 'rxjs';
@@ -41,6 +41,20 @@ export class ByCountryPage {
         })
       );
     },
+  });
+
+  // Computed signals para manejar el estado de manera segura
+  countries = computed(() => {
+    return this.countryResource.error() ? [] : this.countryResource.value() ?? [];
+  });
+
+  errorMessage = computed(() => {
+    const error = this.countryResource.error();
+    if (error) return (error as any).cause?.message || error.message || 'Error desconocido';
+  });
+
+  isEmpty = computed(() => {
+    return !this.countryResource.error() && this.countries().length === 0;
   });
 
   //Usando Promesas de RxJs
