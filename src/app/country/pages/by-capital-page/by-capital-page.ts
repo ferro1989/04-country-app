@@ -1,8 +1,16 @@
-import { Component, computed, inject, linkedSignal, resource, signal } from '@angular/core';
+import {
+  Component,
+  computed,
+  effect,
+  inject,
+  linkedSignal,
+  signal,
+  viewChild,
+} from '@angular/core';
 import { SearchInput } from '../../components/search-input/search-input';
 import { CountryList } from '../../components/country-list/country-list';
 import { CountryService } from '../../services/country';
-import { firstValueFrom, of, tap, catchError, throwError } from 'rxjs';
+import {  of, tap, catchError, throwError } from 'rxjs';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -20,6 +28,9 @@ export class ByCapitalPage {
   queryParam = inject(ActivatedRoute).snapshot.queryParamMap.get('query') ?? '';
 
   query = linkedSignal(() => this.queryParam);
+
+  // Referencia al componente SearchInput
+  searchInput = viewChild.required<SearchInput>(SearchInput);
 
   //Usando Observables de RxJs
   countryResource = rxResource({
@@ -52,11 +63,21 @@ export class ByCapitalPage {
     if (error) return (error as any).cause?.message || error.message || 'Error desconocido';
   });
 
-  errorMessage = linkedSignal(() => this.errorFromResource());
+  // Effect que enfoca cuando termina la carga
+  focusEffect = effect(() => {
+    if (!this.isLoading()) {
+      setTimeout(() => {
+        this.searchInput().focus();
+      }, 0);
+    }
+  });
 
-  // Método para limpiar el error
+  // Método que se llama cuando se cierra el modal
   clearError() {
-    this.errorMessage.set(null);
+    // Enfocar el input después de cerrar el modal
+    setTimeout(() => {
+      this.searchInput().focus();
+    }, 0);
   }
 
   isEmpty = computed(() => {

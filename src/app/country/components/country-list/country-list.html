@@ -31,43 +31,25 @@
         </td>
       </tr>
       }
-      <!--  -->
-      @if (errorMessage()) {
-      <dialog class="modal modal-open">
-        <div class="modal-box">
-          <h3 class="font-bold text-lg flex items-center gap-2">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="text-error">
-              <g fill="none">
-                <path d="M20 10c0 6.5-8 12-8 12s-8-5.5-8-12a8 8 0 1 1 16 0" />
-                <path stroke="currentColor" stroke-linecap="square" stroke-width="2"
-                  d="M20 10c0 6.5-8 12-8 12s-8-5.5-8-12a8 8 0 1 1 16 0ZM9.879 8.379L12 10.5m0 0l2.121 2.121m-2.12-2.12l2.12-2.122m-2.12 2.121l-2.122 2.121" />
-              </g>
-            </svg>
-            Error
-          </h3>
-          <p class="py-4">
-            No se pudo obtener {{searchType()}} con el nombre:
-            <span class="text-error underline decoration-2 font-semibold">{{ errorMessage() }}</span>
-          </p>
-          <div class="modal-action">
-            <button class="btn btn-error" (click)="closeError()">Cerrar</button>
-          </div>
-        </div>
-      </dialog>
-      <!-- <tr>
+      <!-- Fila de error en tabla (se muestra cuando el modal está cerrado) -->
+      @if (errorMessage() && !showModal()) {
+      <tr>
         <td colspan="7">
           <div role="alert" class="alert alert-error mx-auto flex items-center gap-3 w-auto justify-center">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-              <g fill="none">
-                <path d="M20 10c0 6.5-8 12-8 12s-8-5.5-8-12a8 8 0 1 1 16 0" />
-                <path stroke="currentColor" stroke-linecap="square" stroke-width="2"
-                  d="M20 10c0 6.5-8 12-8 12s-8-5.5-8-12a8 8 0 1 1 16 0ZM9.879 8.379L12 10.5m0 0l2.121 2.121m-2.12-2.12l2.12-2.122m-2.12 2.121l-2.122 2.121" />
+            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 30 30 ">
+              <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5">
+                <path stroke-linejoin="round"
+                  d="M7 9.002c-2.175.013-3.353.117-4.121.95C2 10.904 2 12.436 2 15.5s0 4.596.879 5.548C3.757 22 5.172 22 8 22h8c2.828 0 4.243 0 5.121-.952S22 18.564 22 15.5s0-4.596-.879-5.548c-.768-.833-1.946-.937-4.121-.95M6 12l4.5 2.625M18 19l-4.2-2.45m0 0l4.2-2.8m-4.2 2.8l-3.3-1.925m0 0L6 17.6" />
+                <path d="M12 7a2.5 2.5 0 1 0 0-5a2.5 2.5 0 0 0 0 5Zm0 0v4" />
               </g>
             </svg>
-            <span class="font-bold">{{ errorMessage() }}</span>
+            <p class="">
+              No se pudo obtener {{searchType()}} con el nombre:
+              <span class="underline decoration-2 font-semibold">{{ errorMessage() }}</span>
+            </p>
           </div>
         </td>
-      </tr> -->
+      </tr>
       }
       <!--  -->
       @else if (isEmpty() && !isLoading() ) {
@@ -89,3 +71,28 @@
     </tbody>
   </table>
 </section>
+
+<!-- Modal de Error (se muestra inicialmente cuando hay error) -->
+@if (errorMessage() && showModal()) {
+<dialog class="modal modal-open">
+  <div class="modal-box">
+    <h3 class="font-bold text-lg flex items-center gap-2">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="text-error">
+        <g fill="none">
+          <path d="M20 10c0 6.5-8 12-8 12s-8-5.5-8-12a8 8 0 1 1 16 0" />
+          <path stroke="currentColor" stroke-linecap="square" stroke-width="2"
+            d="M20 10c0 6.5-8 12-8 12s-8-5.5-8-12a8 8 0 1 1 16 0ZM9.879 8.379L12 10.5m0 0l2.121 2.121m-2.12-2.12l2.12-2.122m-2.12 2.121l-2.122 2.121" />
+        </g>
+      </svg>
+      Error
+    </h3>
+    <p class="py-4">
+      No se pudo obtener {{searchType()}} con el nombre:
+      <span class="text-error underline decoration-2 font-semibold">{{ errorMessage() }}</span>
+    </p>
+    <div class="modal-action">
+      <button class="btn btn-error" (click)="closeError()">Cerrar</button>
+    </div>
+  </div>
+</dialog>
+}

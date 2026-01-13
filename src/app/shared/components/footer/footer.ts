@@ -1,12 +1,11 @@
-import { Component } from '@angular/core';
+import { DatePipe } from '@angular/common';
+import { Component, signal } from '@angular/core';
 
 @Component({
   selector: 'app-footer',
-  imports: [],
+  imports: [DatePipe],
   templateUrl: './footer.html',
 })
 export class Footer {
-  getCurrentYear(): number {
-    return new Date().getFullYear();
-  }
+  customDate= signal(new Date());
 }

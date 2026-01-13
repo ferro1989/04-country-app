@@ -1,4 +1,4 @@
-import { Component, effect, ElementRef, input, linkedSignal, output, signal, ViewChild } from '@angular/core';
+import { Component, effect, ElementRef, input, linkedSignal, output,  viewChild } from '@angular/core';
 
 
 @Component({
@@ -7,7 +7,7 @@ import { Component, effect, ElementRef, input, linkedSignal, output, signal, Vie
   templateUrl: './search-input.html',
 })
 export class SearchInput {
-  @ViewChild('txtSearch') txtSearch!: ElementRef<HTMLInputElement>;
+  private txtSearch = viewChild.required<ElementRef<HTMLInputElement>>('txtSearch');
 
   placeholder = input('Buscar');
   debounceTime = input(2000);
@@ -32,13 +32,14 @@ export class SearchInput {
     });
   });
 
-  focusEffect = effect( () => {
-    if(!this.isLoading()) {
-      setTimeout(() => {
-        this.txtSearch.nativeElement.focus()
-      }, 0);
-    }
-  });
+  // Método para emitir inmediatamente (sin debounce)
+  emitValue() {
+    this.value.emit(this.inputValue());
+  }
+
+  public focus() {
+    this.txtSearch().nativeElement.focus();
+  }
 
 }
 

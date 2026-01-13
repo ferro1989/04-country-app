@@ -10,7 +10,7 @@
 <!-- country-list -->
  <country-list
   [countries]="countries()"
-  [errorMessage]="errorMessage()"
+  [errorMessage]="errorFromResource()"
   [isEmpty]="isEmpty()"
   [isLoading]="isLoading()"
   (closeErrorEvent)="clearError()"
