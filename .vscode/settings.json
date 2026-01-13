@@ -11,5 +11,6 @@
             "skipChangeDetectionOnPush": true
         }
     },
-    "CodeGPT.apiKey": "Ollama"
+    "CodeGPT.apiKey": "Ollama",
+    "java.format.settings.url": ".vscode/java-formatter.xml"
 }
