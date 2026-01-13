@@ -28,18 +28,23 @@ export class ByCountryPage {
   queryParam = inject(ActivatedRoute).snapshot.queryParamMap.get('query') ?? '';
 
   query = linkedSignal(() => this.queryParam);
+  searchTrigger = signal(0);
 
   // Referencia al componente SearchInput
   searchInput = viewChild.required<SearchInput>(SearchInput);
 
   //Usando Observables de RxJs
   countryResource = rxResource({
-    params: () => ({ query: this.query() }),
+    params: () => ({ query: this.query(), trigger: this.searchTrigger() }),
     stream: ({ params }) => {
-      if (!params.query) return of([]);
+      this.isLoading.set(true);
+
+      if (!params.query) {
+        this.isLoading.set(false);
+        return of([]);
+      }
 
       // Actualizar la URL con el query param 'query'
-      this.isLoading.set(true);
       this.router.navigate(['country/by-country'], {
         queryParams: { query: params.query },
       });
@@ -63,6 +68,14 @@ export class ByCountryPage {
     const error = this.countryResource.error();
     if (error) return (error as any).cause?.message || error.message || 'Error desconocido';
   });
+
+  onSearch(value: string) {
+    if (this.query() === value) {
+      this.searchTrigger.update((v) => v + 1);
+    }
+
+    this.query.set(value);
+  }
 
   // Effect que enfoca cuando termina la carga
   focusEffect = effect(() => {

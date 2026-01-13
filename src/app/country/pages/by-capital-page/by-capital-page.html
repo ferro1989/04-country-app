@@ -1,18 +1,7 @@
 <!-- country-search-input -->
-<country-search-input
-  placeholder="Buscar por capital"
-  (value)="query.set($event)"
-  [debounceTime]="300"
-  [isLoading]="isLoading()"
-  [initialValue]="query()"
-  />
+<country-search-input placeholder="Buscar por capital" (value)="onSearch($event)" [debounceTime]="300"
+  [isLoading]="isLoading()" [initialValue]="query()" />
 
 <!-- country-list -->
-  <country-list
-  [countries]="countries()"
-  [errorMessage]="errorFromResource()"
-  [isEmpty]="isEmpty()"
-  [isLoading]="isLoading()"
-  (closeErrorEvent)="clearError()"
-  [searchType]="'capitales'"
- />
+<country-list [countries]="countries()" [errorMessage]="errorFromResource()" [isEmpty]="isEmpty()"
+  [isLoading]="isLoading()" (closeErrorEvent)="clearError()" [searchType]="'capitales'" />

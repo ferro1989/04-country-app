@@ -10,7 +10,7 @@ import {
 import { SearchInput } from '../../components/search-input/search-input';
 import { CountryList } from '../../components/country-list/country-list';
 import { CountryService } from '../../services/country';
-import {  of, tap, catchError, throwError } from 'rxjs';
+import { of, tap, catchError, throwError } from 'rxjs';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -28,17 +28,22 @@ export class ByCapitalPage {
   queryParam = inject(ActivatedRoute).snapshot.queryParamMap.get('query') ?? '';
 
   query = linkedSignal(() => this.queryParam);
+  searchTrigger = signal(0);
 
   // Referencia al componente SearchInput
   searchInput = viewChild.required<SearchInput>(SearchInput);
 
   //Usando Observables de RxJs
   countryResource = rxResource({
-    params: () => ({ query: this.query() }),
+    params: () => ({ query: this.query(), trigger: this.searchTrigger() }),
     stream: ({ params }) => {
-      if (!params.query) return of([]);
-
       this.isLoading.set(true);
+
+      if (!params.query) {
+        this.isLoading.set(false);
+        return of([]);
+      }
+
       this.router.navigate(['country/by-capital'], {
         queryParams: { query: params.query },
       });
@@ -62,6 +67,14 @@ export class ByCapitalPage {
     const error = this.countryResource.error();
     if (error) return (error as any).cause?.message || error.message || 'Error desconocido';
   });
+
+  onSearch(value: string) {
+    if (this.query() === value) {
+      this.searchTrigger.update((v) => v + 1);
+    }
+
+    this.query.set(value);
+  }
 
   // Effect que enfoca cuando termina la carga
   focusEffect = effect(() => {
